@@ -1,7 +1,7 @@
 extends Area2D
 
 signal fish_spawn(target)
-signal fish_eaten(target)
+signal fish_eaten(target, eater)
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -18,5 +18,11 @@ func spawn():
 
 func _on_Fish_area_entered(area):
 	if area.name.match("**Cat****"):
-		emit_signal("fish_eaten", self)
+		emit_signal("fish_eaten", self, area)
+		queue_free()
+
+
+func _on_Fish_body_entered(body):
+	if body.name.match("**Cat****"):
+		emit_signal("fish_eaten", self, body)
 		queue_free()

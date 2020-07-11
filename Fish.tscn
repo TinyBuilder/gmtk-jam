@@ -34,3 +34,4 @@ animation = "flop"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 [connection signal="area_entered" from="." to="." method="_on_Fish_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_Fish_body_entered"]

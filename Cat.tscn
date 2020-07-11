@@ -34,8 +34,7 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=6]
 radius = 16.0
 
-[node name="Cat" type="Area2D"]
-input_pickable = false
+[node name="Cat" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
