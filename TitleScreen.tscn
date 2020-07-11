@@ -11,7 +11,7 @@
 [ext_resource path="res://Graphics/sky.png" type="Texture" id=9]
 [ext_resource path="res://Fonts/RedeemGold/RedeemGold.ttf" type="DynamicFontData" id=10]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 64
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
@@ -150,7 +150,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "Start"
 underline = 2
 [connection signal="button_down" from="CenterContainer/Start" to="." method="_on_Start_button_down"]
