@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://ParallaxBackground.gd" type="Script" id=1]
 [ext_resource path="res://Graphics/Clouds/Cloud 4.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://TitleScreen.gd" type="Script" id=8]
 [ext_resource path="res://Graphics/sky.png" type="Texture" id=9]
 [ext_resource path="res://Fonts/RedeemGold/RedeemGold.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Music/title.ogg" type="AudioStream" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -153,4 +154,8 @@ size_flags_vertical = 6
 custom_fonts/font = SubResource( 1 )
 text = "Start"
 underline = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+autoplay = true
 [connection signal="button_down" from="CenterContainer/Start" to="." method="_on_Start_button_down"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/podium.ogg-9483300c828fd827a065f69256b75067.oggstr"
+
+[deps]
+
+source_file="res://Music/podium.ogg"
+dest_files=[ "res://.import/podium.ogg-9483300c828fd827a065f69256b75067.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
