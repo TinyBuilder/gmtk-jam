@@ -9,6 +9,7 @@ var screen_size
 var rng
 var targets = []
 var threats = []
+var is_player = false
 var is_chasing = false
 var is_eating = false
 var affected_by_gravity = false
@@ -17,8 +18,10 @@ var affected_by_gravity = false
 func _ready():
 	pass
 
-func start(random, is_player, gravity):
+func start(random, player, gravity):
 	rng = random
+	rng.randomize()
+	is_player = player
 	show()
 	$AnimatedSprite.play("walk")
 	if is_player:
@@ -45,6 +48,8 @@ func prioritise_target(a, b):
 
 func add_target(target):
 	targets.append(target)
+	if target.global_position.distance_to(global_position) < 200 and rng.randf_range(0.0, 10.0) < 3.0:
+		evaluate()
 
 func remove_target(target, eater):
 	if is_chasing and targets.size() > 0 and target == targets[0]:
@@ -68,6 +73,7 @@ func add_threat(threat):
 		$Timer.start(rng.randf_range(0.5, 1.0))
 
 func evaluate():
+	randomize()
 	if rng.randf_range(0.0, 10.0) < 9.0:
 		var speed = rng.randf() * MAX_SPEED
 		
@@ -80,8 +86,14 @@ func evaluate():
 				velocity.y = targets[0].global_position.y - global_position.y
 			else:
 				is_chasing = false
-				velocity.x = rng.randf_range(-1.0, 1.0)
-				velocity.y = rng.randf_range(-1.0, 1.0)
+				if global_position.x < Global.front and not is_player:
+					velocity.x = rng.randf_range(-0.1, 1.9)
+				else:
+					velocity.x = rng.randf_range(-1.0, 1.0)
+				if global_position.y > 340:
+					velocity.y = rng.randf_range(-1.5, 0.5)
+				else:
+					velocity.y = rng.randf_range(-0.5, 1.5)
 		else:
 			is_chasing = false
 			velocity.x = rng.randf_range(-1.0, 1.0)
@@ -106,3 +118,5 @@ func _process(delta):
 	elif velocity.x < 0:
 		$AnimatedSprite.set_flip_h(true)	
 	move_and_slide(velocity)
+	if global_position.x > Global.front:
+		Global.front = global_position.x

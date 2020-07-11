@@ -14,17 +14,16 @@ var player_no = 0
 
 var crosshair = load("res://Sprites/retical.png")
 
-var fish_ready = true
+var fish_ready = false
 var cucumber_ready = false
+var started = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	randomize()
 	#Input.set_custom_mouse_cursor(crosshair)
 	
 	$FishHUD.play("default")
-	$CucumberHUD.play("loading")
-	$CucumberTimer.start()
+	$CucumberHUD.play("default")
 	
 	for i in range(MAX_CATS):
 		var cat = Cat.instance()
@@ -37,10 +36,13 @@ func _ready():
 		pos.y -= i*32
 		cat.position = pos
 		cat.start(Global.rng, is_player, false)
+	
+	$StartCountdown.start()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	if not started:
+		$CenterContainer/Label.text = str(ceil($StartCountdown.time_left))
 
 func _on_Area2D_body_entered(body):
 	if body.name.match("**Cat****"):
@@ -54,9 +56,9 @@ func _on_Area2D_body_entered(body):
 		Global.winner = cats.find(body)
 		Global.second = cats.find(second)
 		Global.third = cats.find(third)
-		get_tree().change_scene("res://Podium.tscn")
-
-
+		$CenterContainer.show()
+		$CenterContainer/Label.text = "Cat " + str(Global.winner + 1) + " wins!"
+		$EndTimer.start()
 
 func _on_FishTimer_timeout():
 	fish_ready = true
@@ -81,7 +83,7 @@ func _on_Area2D2_input_event(viewport, event, shape_idx):
 			fish_ready = false
 			$FishHUD.play("loading")
 			$FishTimer.start()
-		elif event.get_button_index() == 2:
+		elif event.get_button_index() == 2 and cucumber_ready:
 			var cucumber = Cucumber.instance()
 			add_child(cucumber)
 			cucumber.position = event.position
@@ -91,3 +93,14 @@ func _on_Area2D2_input_event(viewport, event, shape_idx):
 			cucumber_ready = false
 			$CucumberHUD.play("loading")
 			$CucumberTimer.start()
+
+func _on_StartCountdown_timeout():
+	fish_ready = true
+	$CucumberHUD.play("loading")
+	$CucumberTimer.start()
+	$CenterContainer.hide()
+	started = true
+
+
+func _on_EndTimer_timeout():
+	get_tree().change_scene("res://Podium.tscn")
