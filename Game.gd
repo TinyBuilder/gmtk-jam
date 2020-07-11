@@ -15,7 +15,7 @@ var player_no = 0
 var crosshair = load("res://Sprites/retical.png")
 
 var fish_ready = true
-var cucumber_ready = true
+var cucumber_ready = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,7 +23,8 @@ func _ready():
 	#Input.set_custom_mouse_cursor(crosshair)
 	
 	$FishHUD.play("default")
-	$CucumberHUD.play("default")
+	$CucumberHUD.play("loading")
+	$CucumberTimer.start()
 	
 	for i in range(MAX_CATS):
 		var cat = Cat.instance()
@@ -35,7 +36,7 @@ func _ready():
 		var pos = $StartPosition.position
 		pos.y -= i*32
 		cat.position = pos
-		cat.start(Global.rng, is_player)
+		cat.start(Global.rng, is_player, false)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

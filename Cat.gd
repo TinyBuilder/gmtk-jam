@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 
 # Declare member variables here. Examples:
-const MAX_SPEED = 100
+const MAX_SPEED = 50
 const MAX_WAIT = 3.0
 var velocity = Vector2()
 var screen_size
@@ -11,12 +11,13 @@ var targets = []
 var threats = []
 var is_chasing = false
 var is_eating = false
+var affected_by_gravity = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
 
-func start(random, is_player):
+func start(random, is_player, gravity):
 	rng = random
 	show()
 	$AnimatedSprite.play("walk")
@@ -26,6 +27,7 @@ func start(random, is_player):
 	#	$Player.hide()
 	else:
 		$Player.play("cpu")
+	affected_by_gravity = gravity
 	idle()
 
 func idle():
@@ -97,6 +99,8 @@ func _on_Timer_timeout():
 	evaluate()
 
 func _process(delta):
+	if affected_by_gravity:
+		velocity.y = 100
 	if velocity.x > 0:
 		$AnimatedSprite.set_flip_h(false)
 	elif velocity.x < 0:
