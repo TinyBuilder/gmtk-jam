@@ -8,6 +8,7 @@ export (PackedScene) var Cat
 # var b = "text"
 
 var cats = []
+var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,7 +17,11 @@ func _ready():
 		var cat = Cat.instance()
 		add_child(cat)
 		cats.append(cat)
-		cat.start($StartPosition.position)
+		var pos = $StartPosition.position
+		pos.x += rng.randf_range(-10.0, 10.0)
+		pos.y += rng.randf_range(-10.0, 10.0)
+		cat.position = pos
+		cat.start(rng)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -25,10 +30,9 @@ func _ready():
 func _input(event):
    # Mouse in viewport coordinates
 	if event is InputEventMouseButton and event.get_button_index() == 1 and event.is_pressed() :
-		print("Mouse Click ", event.position)
 		var fish = Fish.instance()
 		add_child(fish)
 		fish.position = event.position
-		print("Fish spawned")
 		fish.connect("fish_spawn", cats[0], "add_target")
+		fish.connect("fish_eaten", cats[0], "remove_target")
 		fish.spawn()
