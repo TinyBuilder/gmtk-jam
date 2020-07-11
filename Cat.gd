@@ -52,16 +52,16 @@ func add_target(target):
 		evaluate()
 
 func remove_target(target, eater):
-	if is_chasing and targets.size() > 0 and target == targets[0]:
+	if eater == self:
+		$AnimatedSprite.play("eat")
 		targets.erase(target)
-		if eater == self:
-			$AnimatedSprite.play("eat")
-			idle()
-		else:
-			evaluate()
+		idle()
 	else:
-		targets.erase(target)
-
+		if is_chasing and targets.size() > 0 and targets[0] == target:
+			targets.erase(target)
+			evaluate()
+		else:
+			targets.erase(target)
 
 func add_threat(threat):
 	if threat.global_position.distance_to(global_position) < 50 and rng.randf_range(0.0, 10.0) < 7.5:
@@ -77,27 +77,26 @@ func evaluate():
 	if rng.randf_range(0.0, 10.0) < 9.0:
 		var speed = rng.randf() * MAX_SPEED
 		
-		if targets.size() > 0:
+		if targets.size() > 1:
 			targets.sort_custom(self, "prioritise_target")
-			
-			if targets[0].global_position.distance_to(global_position) < 200 and rng.randf_range(0.0, 10.0) < 9.0:
-				is_chasing = true
-				velocity.x = targets[0].global_position.x - global_position.x
-				velocity.y = targets[0].global_position.y - global_position.y
-			else:
-				is_chasing = false
-				if global_position.x < Global.front and not is_player:
-					velocity.x = rng.randf_range(-0.1, 1.9)
-				else:
-					velocity.x = rng.randf_range(-1.0, 1.0)
-				if global_position.y > 340:
-					velocity.y = rng.randf_range(-1.5, 0.5)
-				else:
-					velocity.y = rng.randf_range(-0.5, 1.5)
+		
+		print(self.name + str(targets.size()))
+		
+		if targets.size() > 0 and targets[0].global_position.distance_to(global_position) < 200 and rng.randf_range(0.0, 10.0) < 9.0:
+			is_chasing = true
+			velocity.x = targets[0].global_position.x - global_position.x
+			velocity.y = targets[0].global_position.y - global_position.y
 		else:
 			is_chasing = false
-			velocity.x = rng.randf_range(-1.0, 1.0)
-			velocity.y = rng.randf_range(-1.0, 1.0)
+			if global_position.x < Global.front and not is_player:
+				velocity.x = rng.randf_range(-0.5, 1.5)
+			else:
+				velocity.x = rng.randf_range(-1.0, 1.0)
+			
+			if global_position.y > 340:
+				velocity.y = rng.randf_range(-1.5, 0.5)
+			else:
+				velocity.y = rng.randf_range(-0.5, 1.5)
 		
 		velocity = velocity.normalized() * speed
 		$AnimatedSprite.play("walk")
@@ -120,3 +119,15 @@ func _process(delta):
 	move_and_slide(velocity)
 	if global_position.x > Global.front:
 		Global.front = global_position.x
+
+
+func _on_MeowTimer_timeout():
+	var rand = rng.randf()
+	if rand < 0.1:
+		$Meow1.pitch_scale = rng.randf_range(0.8, 1.2)
+		$Meow1.play()
+	elif rand < 0.2:
+		$Meow2.pitch_scale = rng.randf_range(0.7, 1.1)
+		$Meow2.play()
+	
+	$MeowTimer.start(rng.randf_range(10.0, 15.0))

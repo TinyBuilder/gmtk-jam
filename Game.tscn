@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=2]
+[gd_scene load_steps=89 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Cat.tscn" type="PackedScene" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://Graphics/Medals/3rd.png" type="Texture" id=25]
 [ext_resource path="res://Fonts/RedeemGold/RedeemGold.ttf" type="DynamicFontData" id=26]
 [ext_resource path="res://Music/race.ogg" type="AudioStream" id=27]
+[ext_resource path="res://Music/gun.ogg" type="AudioStream" id=28]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -669,6 +670,7 @@ shape = SubResource( 59 )
 [node name="StartCountdown" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+autostart = true
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 margin_right = 1024.0
@@ -690,8 +692,12 @@ __meta__ = {
 [node name="EndTimer" type="Timer" parent="."]
 wait_time = 3.0
 
+[node name="Gun" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 28 )
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 27 )
+volume_db = -10.0
 autoplay = true
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="FishTimer" to="." method="_on_FishTimer_timeout"]
