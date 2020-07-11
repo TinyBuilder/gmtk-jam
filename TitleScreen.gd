@@ -17,5 +17,4 @@ func _ready():
 
 
 func _on_Start_button_down():
-	print("start")
-	get_tree().change_scene("res://Game.tscn")
+	get_tree().change_scene("res://CatSelect.tscn")

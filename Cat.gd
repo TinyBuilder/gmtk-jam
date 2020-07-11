@@ -13,21 +13,23 @@ var is_player = false
 var is_chasing = false
 var is_eating = false
 var affected_by_gravity = false
+var id
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
 
-func start(random, player, gravity):
+func start(random, no, player, gravity):
 	rng = random
+	id = no
 	rng.randomize()
 	is_player = player
 	show()
-	$AnimatedSprite.play("walk")
+	$AnimatedSprite.play("walk" + str(id + 1))
 	if is_player:
 		$Player.play("player")
-	#elif is_player == null:
-	#	$Player.hide()
+	elif is_player == null:
+		$Player.hide()
 	else:
 		$Player.play("cpu")
 	affected_by_gravity = gravity
@@ -53,7 +55,7 @@ func add_target(target):
 
 func remove_target(target, eater):
 	if eater == self:
-		$AnimatedSprite.play("eat")
+		$AnimatedSprite.play("eat" + str(id + 1))
 		targets.erase(target)
 		idle()
 	else:
@@ -69,7 +71,7 @@ func add_threat(threat):
 		velocity.x = global_position.x - threat.global_position.x
 		velocity.y = global_position.y - threat.global_position.y
 		velocity = velocity.normalized() * speed
-		$AnimatedSprite.play("walk")
+		$AnimatedSprite.play("walk" + str(id + 1))
 		$Timer.start(rng.randf_range(0.5, 1.0))
 
 func evaluate():
@@ -79,8 +81,6 @@ func evaluate():
 		
 		if targets.size() > 1:
 			targets.sort_custom(self, "prioritise_target")
-		
-		print(self.name + str(targets.size()))
 		
 		if targets.size() > 0 and targets[0].global_position.distance_to(global_position) < 200 and rng.randf_range(0.0, 10.0) < 9.0:
 			is_chasing = true
@@ -99,11 +99,11 @@ func evaluate():
 				velocity.y = rng.randf_range(-0.5, 1.5)
 		
 		velocity = velocity.normalized() * speed
-		$AnimatedSprite.play("walk")
+		$AnimatedSprite.play("walk" + str(id + 1))
 		$Timer.start(rng.randf_range(0.0, MAX_WAIT))
 		
 	else:
-		$AnimatedSprite.play("sleep")
+		$AnimatedSprite.play("sleep" + str(id + 1))
 		idle()
 
 func _on_Timer_timeout():

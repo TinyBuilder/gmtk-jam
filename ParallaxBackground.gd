@@ -13,12 +13,12 @@ func _ready():
 	screen_size = get_viewport().size
 	for node in get_children():
 		node.rect_position.x = randf() * screen_size.x + screen_size.x
-		node.rect_position.y = randf() * screen_size.y
+		node.rect_position.y = randf() * 0.5 * screen_size.y
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	for node in get_children():
-		node.rect_position.x = node.rect_position.x - 3
+		node.rect_position.x = node.rect_position.x - 1
 		if node.rect_position.x < -400:
-			node.rect_position.x = screen_size.x + randf() * 500
-			node.rect_position.y = randf() * screen_size.y
+			node.rect_position.x = screen_size.x + randf() * screen_size.x
+			node.rect_position.y = randf() * 0.5 * screen_size.y
