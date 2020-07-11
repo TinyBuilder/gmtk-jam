@@ -36,8 +36,6 @@ func _ready():
 		pos.y -= i*32
 		cat.position = pos
 		cat.start(Global.rng, is_player, false)
-	
-	$StartCountdown.start()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -99,6 +97,7 @@ func _on_StartCountdown_timeout():
 	$CucumberHUD.play("loading")
 	$CucumberTimer.start()
 	$CenterContainer.hide()
+	$Gun.play()
 	started = true
 
 
