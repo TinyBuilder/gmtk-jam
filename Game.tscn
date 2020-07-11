@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Game.gd" type="Script" id=1]
+[ext_resource path="res://Cat.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Fish.tscn" type="PackedScene" id=3]
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 1 )
+Fish = ExtResource( 3 )
+Cat = ExtResource( 2 )
+
+[node name="StartPosition" type="Position2D" parent="."]
+position = Vector2( 128, 300 )
