@@ -7,13 +7,14 @@ export (PackedScene) var Cat
 # var a = 2
 # var b = "text"
 
+const MAX_CATS = 8
 var cats = []
 var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
-	for _i in range(8):
+	for _i in range(MAX_CATS):
 		var cat = Cat.instance()
 		add_child(cat)
 		cats.append(cat)
@@ -33,6 +34,7 @@ func _input(event):
 		var fish = Fish.instance()
 		add_child(fish)
 		fish.position = event.position
-		fish.connect("fish_spawn", cats[0], "add_target")
-		fish.connect("fish_eaten", cats[0], "remove_target")
+		for i in range(MAX_CATS):
+			fish.connect("fish_spawn", cats[i], "add_target")
+			fish.connect("fish_eaten", cats[i], "remove_target")
 		fish.spawn()

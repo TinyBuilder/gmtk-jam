@@ -1,7 +1,7 @@
 extends Area2D
 
-signal fish_spawn
-signal fish_eaten
+signal fish_spawn(target)
+signal fish_eaten(target)
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -13,10 +13,10 @@ func _ready():
 	pass
 
 func spawn():
-	emit_signal("fish_spawn")
-	print("Fish ready")
+	emit_signal("fish_spawn", self)
+	$AnimatedSprite.play("flop")
 
 func _on_Fish_area_entered(area):
-	if area.name == "Cat":
-		emit_signal("fish_eaten")
+	if area.name.match("**Cat****"):
+		emit_signal("fish_eaten", self)
 		queue_free()
