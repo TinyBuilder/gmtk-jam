@@ -1,0 +1,407 @@
+l1=20
+l2=20
+g=0.01
+gplayer=0.5
+m1=1
+m2=1
+c1rad=3
+c2rad=5
+playerrad=3.5
+
+function _init()
+
+x1=1
+y1=1
+x2=1
+y2=1
+theta1=rnd(0.5)
+theta2=rnd(0.5)
+dtheta1=0
+dtheta2=0
+ddtheta1=0
+ddtheta2=0
+player1x=58
+player1y=80
+player2x=2
+player2y=2
+playerdx=0
+playerdy=0
+mu=1+(m1/m2)
+t=1.5
+grid_y=0
+grid_x=0
+jump=7
+xarrow=0
+yarrow=113
+coin1x=0
+coin1y=0
+coin2x=0
+coin2y=0
+gametime=0
+points=0
+deadr=0
+gamesecs=0
+
+scene="menu"
+gameover="false"
+
+end
+
+function _update()
+	if scene=="menu" then
+		update_menu()
+	elseif scene=="game" then
+		update_game()
+	elseif scene=="credits" then
+		update_credits()
+	elseif scene=="gameover" then
+		update_gameover()
+	end
+end
+
+function _draw()
+	if scene=="menu" then
+		draw_menu()
+	elseif scene=="game" then
+		draw_game()
+	elseif scene=="credits" then
+		draw_credits()
+	elseif scene=="gameover" then
+	 draw_gameover()
+	end
+end
+
+function swing()
+
+x1=l1*sin(theta1)
+y1=-l1*cos(theta1)
+x2=l1*sin(theta1)+l2*sin(theta2)
+y2=-l1*cos(theta1)-l2*cos(theta2)
+ddtheta1=(g*(sin(theta2)*cos(theta1-theta2)-mu*sin(theta1))-(l2*dtheta2*dtheta2+l1*dtheta1*dtheta1*cos(theta1-theta2))*sin(theta1-theta2))/(l1*(mu-cos(theta1-theta2)*cos(theta1-theta2)))
+ddtheta2=(g*mu*(sin(theta1)*cos(theta1-theta2)-sin(theta2))+(mu*l1*dtheta1*dtheta1+l2*dtheta2*dtheta2*cos(theta1-theta2))*sin(theta1-theta2))/(l2*(mu-cos(theta1-theta2)*cos(theta1-theta2)))
+dtheta1+=ddtheta1*t
+dtheta2+=ddtheta2*t
+theta1+=dtheta1*t
+theta2+=dtheta2*t
+
+end
+
+--main menu
+
+function update_menu()
+
+if scene=="menu" then
+	arrow_menu()
+	swing()
+end
+
+end
+
+function draw_menu()
+
+if scene=="menu" then
+	rectfill(0,0,127,127,0)
+
+	c1=circfill(x1+64,y1+64,c1rad,5)
+	c2=circfill(x2+64,y2+64,c2rad,5)
+	line1=line(64,64,x1+64,y1+64,5)
+	line2=line(x1+64,y1+64,x2+64,y2+64,5)
+ print("chaotic",50,20,7)
+	print("by two separate gorillas",16,30,7)
+	print("survive 60 seconds",30,80,7)
+	print("with the pendulum",33,90,7)
+ print("⬅️➡️❎ to move and jump",38,100,7)
+ print("begin",10,115,7)
+ print("credits",91,115,7)
+ test=sin(rnd(1)-2)*20+64
+ arrow=spr(8,xarrow,yarrow)
+end
+
+end
+
+function arrow_menu()
+
+if btnp(0) then
+	xarrow=0
+	yarrow=113
+end
+
+if btnp(1) then
+ xarrow=81
+ yarrow=113
+end
+
+if (btnp(5) and (xarrow==0)) then
+ scene="game"
+ theta1=rnd(0.2)
+ theta2=rnd(0.2)
+ dtheta1=0
+	dtheta2=0
+	ddtheta1=0
+	ddtheta2=0
+ player1x=58
+ player1y=80
+ gametime=0
+ points=0
+ deadr=0
+ gamesecs=0
+ playerdx=0
+ playerdy=0
+end
+
+if (btnp(5) and (xarrow==81)) then
+	scene="credits"
+end
+
+end
+
+--credits scene
+
+function update_credits()
+
+if scene=="credits" then
+	back()
+end
+
+end
+
+function draw_credits()
+
+if scene=="credits" then
+	rectfill(0,0,127,127,0)
+	print("i made this.",2,20,7)
+	print("back",50,80,7)
+ arrow=spr(8,40,78)
+end
+
+end
+
+function back()
+
+if (btnp(5)) then
+	scene="menu"
+end
+
+end
+
+--game
+
+function update_game()
+if scene=="game" then
+ pendulum()
+	swing()
+	player()
+	coins()
+	timef()
+	gametime+=1
+	gamesecs=gametime/30
+	points+=0
+	playerdy+=gplayer
+	grid_x=flr(player1x/8)
+	grid_y=flr(player1y/8)
+	map_tile=mget(grid_x,grid_y)
+	flag_tile=fget(map_tile)
+end
+
+end
+
+function draw_game()
+
+rectfill(0,0,128,128,0)
+map(0,0,0,0,16,16)
+
+print(points,40,60,7)
+print(60-gamesecs,60,60,7)
+
+line1=line(64,64,x1+64,y1+64,13)
+line2=line(x1+64,y1+64,x2+64,y2+64,13)
+c1=circfill(x1+64,y1+64,c1rad,8)
+c2=circfill(x2+64,y2+64,c2rad,8)
+
+player1=spr(1,player1x,player1y)
+coin1=spr(7,coin1x,coin1y)
+coin2=spr(9,coin2x,coin2y)
+
+end
+
+function player()
+
+buttpress=false
+
+if btn(1) then
+	if playerdx<2 then
+		playerdx=playerdx+1
+	end
+	buttpress=true
+end
+	
+if btn(0) then
+	if playerdx>-2 then
+		playerdx=playerdx-1
+	end
+	buttpress=true
+end
+
+if not(buttpress) then
+	playerdx=playerdx/2
+end
+
+if btnp(5) and (grounded) then
+	playerdy-=jump
+	grounded=false
+	sfx(0)
+end
+
+if hit(player1x+playerdx,player1y,7,7) then
+	playerdx=0
+end
+
+if hit(player1x,player1y+playerdy,7,7) then
+	playerdy=0
+	grounded=true
+end
+
+player1x+=playerdx
+player1y+=playerdy
+
+end
+
+function hit(player1x,player1y,w,h)
+collide=false
+
+for i=player1x,player1x+w,w do	
+	if fget(mget(i/8,player1y/8))>0 or 
+	   fget(mget(i/8,(player1y+h)/8))>0 then
+    collide=true
+ end
+end
+return collide
+end
+
+function pendulum()
+
+dist1=sqrt(((player1x+4)-(x1+64))^2+((player1y+4)-(y1+64))^2)
+dist2=sqrt(((player1x+4)-(x2+64))^2+((player1y+4)-(y2+64))^2)
+
+if dist1<7.5 then
+scene="gameover"
+deadx=player1x
+deady=player1y
+sfx(1)
+end
+
+if dist2<8.5 then
+scene="gameover"
+deadx=player1x
+deady=player1y
+sfx(1)
+end
+
+end
+
+function coins()
+
+dist1c=sqrt(((player1x+4)-(coin1x+4))^2+((player1y+4)-(coin1y+4))^2)
+
+dist2c=sqrt(((player1x+4)-(coin2x+4))^2+((player1y+4)-(coin2y+4))^2)
+
+if dist1c<7 then
+	coin1x=-30
+	coin1y=-30
+	coin=true
+end
+
+if dist2c<7 then
+	coin2x=-40
+	coin2y=-40
+	coin=true
+end
+
+if coin==true then
+points+=50
+coin=false
+sfx(2)
+end
+
+if (gametime%100==0) then
+	q=64+(rnd(20)-10)
+		if (q<64) then
+			r=q-30
+		elseif (q>64) then
+			r=q+30
+		end
+	s=rnd(1)	
+	coin1x=cos(s)*abs(r-64)+64
+	coin1y=sin(s)*abs(r-64)+64
+
+	q2=64+(rnd(20)-10)
+		if (q2<64) then
+			r2=q2-30
+		elseif (q2>64) then
+			r2=q2+30
+		end
+	s2=rnd(1)	
+	coin2x=cos(s2)*abs(r2-64)+64
+	coin2y=sin(s2)*abs(r2-64)+64
+end
+
+return coin
+
+end
+
+function timef()
+
+if (gamesecs%30==0) then
+	sfx(4)
+end	
+
+if ((60-gamesecs)<0) then
+scene="gameover"
+end
+
+end
+
+--gameover
+
+function update_gameover()
+
+if scene=="gameover" then
+gameend()
+swing()
+end
+
+end
+
+function draw_gameover()
+
+rectfill(0,0,128,128,0)
+
+if ((60-gamesecs)<0) then
+	print("you survived",50,50,7)
+	print(points.. " points",60,60,7)
+	print("press ❎ to retry",80,90,7)
+elseif ((60-gamesecs)>0) then
+	print("game over",50,50,7)
+	print(points.. " points",60,60,7)
+	print("you survived " ..gamesecs.. " seconds",0,80,7)
+	print("press ❎ to retry",80,90,7)
+end
+c1=circfill(x1+64,y1+64,c1rad,5)
+c2=circfill(x2+64,y2+64,c2rad,5)
+line1=line(64,64,x1+64,y1+64,5)
+line2=line(x1+64,y1+64,x2+64,y2+64,5)
+
+player1=spr(1,player1x,player1y)
+coin1=spr(9,coin1x,coin1y)
+coin2=spr(9,coin2x,coin2y)
+
+end
+
+function gameend()
+	player1x=-20
+	player1y=-20
+	deadr+=0.2
+	if btnp(5) then
+	scene="menu"
+	end
+end
