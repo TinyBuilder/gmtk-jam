@@ -9,6 +9,9 @@ export (PackedScene) var Cat
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Global.RaceBGM.stop()
+	Global.TitleBGM.stop()
+	Global.PodiumBGM.play()
 	var cat1 = Cat.instance()
 	add_child(cat1)
 	cat1.position = $"1st".position
@@ -30,3 +33,7 @@ func _ready():
 
 func _on_Restart_pressed():
 	get_tree().change_scene("res://CatSelect.tscn")
+
+
+func _on_MainMenu_pressed():
+	get_tree().change_scene("res://TitleScreen.tscn")

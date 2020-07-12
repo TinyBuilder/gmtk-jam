@@ -9,6 +9,10 @@ export (PackedScene) var Cat
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if not Global.TitleBGM.playing:
+		Global.RaceBGM.stop()
+		Global.PodiumBGM.stop()
+		Global.TitleBGM.play()
 	for i in range(8):
 		var cat = Cat.instance()
 		var is_player = false
@@ -68,3 +72,7 @@ func _on_LinkButton7_pressed():
 func _on_LinkButton8_pressed():
 	Global.player_no = 7
 	get_tree().change_scene("res://Game.tscn")
+
+
+func _on_Back_pressed():
+	get_tree().change_scene("res://TitleScreen.tscn")
