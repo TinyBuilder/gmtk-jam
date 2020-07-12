@@ -1,6 +1,7 @@
 extends Node2D
 
 export (PackedScene) var Cat
+export (PackedScene) var Cage
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -14,17 +15,16 @@ func _ready():
 		Global.PodiumBGM.stop()
 		Global.TitleBGM.play()
 	for i in range(8):
+		var cage = Cage.instance()
 		var cat = Cat.instance()
 		var is_player = false
 		if i == Global.player_no:
 			is_player = true
 		add_child(cat)
+		add_child(cage)
 		var pos = $Position2D.position
-		if i < 4:
-			pos.y += i*96
-		else:
-			pos.y += (i-4)*96
-			pos.x += 512
+		pos.y += i*64
+		cage.position = pos
 		cat.position = pos
 		cat.start(Global.rng, i, null, true)
 
@@ -76,3 +76,15 @@ func _on_LinkButton8_pressed():
 
 func _on_Back_pressed():
 	get_tree().change_scene("res://TitleScreen.tscn")
+
+
+func _on_LinkButton1_mouse_entered():
+	$Profile.text = "Tebi is prone to being easily distracted, but so is every other cat in the race so it's a level playing field"
+
+
+func _on_LinkButton2_mouse_entered():
+	$Profile.text = "Huge is quite big. He also likes frogs a lot."
+
+
+func _on_LinkButton3_mouse_entered():
+	pass # Replace with function body.

@@ -8,7 +8,7 @@
 [ext_resource path="res://Graphics/Clouds/Cloud 5.png" type="Texture" id=6]
 [ext_resource path="res://logo.png" type="Texture" id=7]
 [ext_resource path="res://TitleScreen.gd" type="Script" id=8]
-[ext_resource path="res://Graphics/sky.png" type="Texture" id=9]
+[ext_resource path="res://Graphics/largersky.png" type="Texture" id=9]
 [ext_resource path="res://Fonts/RedeemGold/RedeemGold.ttf" type="DynamicFontData" id=10]
 
 [sub_resource type="DynamicFont" id=1]
@@ -38,10 +38,16 @@ __meta__ = {
 }
 
 [node name="sky" type="Sprite" parent="."]
-position = Vector2( 512, 300 )
 texture = ExtResource( 9 )
+centered = false
+
+[node name="sky2" type="Sprite" parent="."]
+position = Vector2( 2048, 0 )
+texture = ExtResource( 9 )
+centered = false
 
 [node name="ParallaxBackground" type="Container" parent="."]
+visible = false
 margin_right = 1024.0
 margin_bottom = 600.0
 script = ExtResource( 1 )
@@ -167,6 +173,9 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 0.8, 0.619608, 1 )
+custom_colors/font_color_pressed = Color( 0.768627, 0.360784, 0, 1 )
 text = "Start"
 underline = 2
 
@@ -180,6 +189,9 @@ margin_left = 458.0
 margin_right = 566.0
 margin_bottom = 52.0
 custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 0.8, 0.619608, 1 )
+custom_colors/font_color_pressed = Color( 0.768627, 0.360784, 0, 1 )
 text = "Help"
 underline = 2
 
@@ -193,6 +205,9 @@ margin_left = 420.0
 margin_right = 604.0
 margin_bottom = 52.0
 custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 0.8, 0.619608, 1 )
+custom_colors/font_color_pressed = Color( 0.768627, 0.360784, 0, 1 )
 text = "Credits"
 underline = 2
 [connection signal="button_down" from="VBoxContainer/CenterContainer/Start" to="." method="_on_Start_button_down"]

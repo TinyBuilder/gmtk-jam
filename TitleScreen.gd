@@ -15,8 +15,14 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	$sky.position.x -= 1
+	if $sky.position.x <= -2048:
+		$sky.position.x = 2048
+	
+	$sky2.position.x -= 1
+	if $sky2.position.x <= -2048:
+		$sky2.position.x = 2048
 
 
 func _on_Start_button_down():
