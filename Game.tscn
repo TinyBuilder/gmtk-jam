@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=2]
+[gd_scene load_steps=89 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Cat.tscn" type="PackedScene" id=2]
@@ -25,7 +25,6 @@
 [ext_resource path="res://Graphics/Clouds/Cloud 3.png" type="Texture" id=24]
 [ext_resource path="res://Graphics/Clouds/Cloud 5.png" type="Texture" id=25]
 [ext_resource path="res://Fonts/RedeemGold/RedeemGold.ttf" type="DynamicFontData" id=26]
-[ext_resource path="res://Music/race.ogg" type="AudioStream" id=27]
 [ext_resource path="res://Music/gun.ogg" type="AudioStream" id=28]
 [ext_resource path="res://Graphics/Clouds/Cloud 4.png" type="Texture" id=29]
 [ext_resource path="res://sky.gd" type="Script" id=30]
@@ -716,11 +715,6 @@ wait_time = 3.0
 
 [node name="Gun" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 28 )
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 27 )
-volume_db = -10.0
-autoplay = true
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="FishTimer" to="." method="_on_FishTimer_timeout"]
 [connection signal="timeout" from="CucumberTimer" to="." method="_on_CucumberTimer_timeout"]

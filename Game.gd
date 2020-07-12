@@ -20,6 +20,9 @@ var finished = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Global.TitleBGM.stop()
+	Global.PodiumBGM.stop()
+	Global.RaceBGM.play()
 	#Input.set_custom_mouse_cursor(crosshair)
 	
 	$FishHUD.play("default")
@@ -35,6 +38,7 @@ func _ready():
 		var pos = $StartPosition.position
 		pos.y -= i*32
 		cat.position = pos
+		cat.z_index = 2
 		cat.start(Global.rng, i, is_player, false)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

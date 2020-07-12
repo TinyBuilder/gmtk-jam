@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://ParallaxBackground.gd" type="Script" id=1]
 [ext_resource path="res://Graphics/Clouds/Cloud 4.png" type="Texture" id=2]
@@ -10,9 +10,20 @@
 [ext_resource path="res://TitleScreen.gd" type="Script" id=8]
 [ext_resource path="res://Graphics/sky.png" type="Texture" id=9]
 [ext_resource path="res://Fonts/RedeemGold/RedeemGold.ttf" type="DynamicFontData" id=10]
-[ext_resource path="res://Music/title.ogg" type="AudioStream" id=11]
 
 [sub_resource type="DynamicFont" id=1]
+size = 64
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 64
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=3]
 size = 64
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
@@ -121,24 +132,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
 margin_right = 1024.0
 margin_bottom = 600.0
 
-[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer2"]
 margin_right = 1024.0
 margin_bottom = 446.0
 
-[node name="Logo" type="TextureRect" parent="VBoxContainer/CenterContainer2"]
+[node name="Logo" type="TextureRect" parent="VBoxContainer2/CenterContainer"]
 margin_left = 104.0
 margin_right = 919.0
 margin_bottom = 446.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource( 7 )
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 450.0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_right = 1024.0
-margin_bottom = 502.0
+margin_bottom = 600.0
+alignment = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 436.0
+margin_right = 1024.0
+margin_bottom = 488.0
 
 [node name="Start" type="LinkButton" parent="VBoxContainer/CenterContainer"]
 margin_left = 444.0
@@ -152,7 +170,31 @@ custom_fonts/font = SubResource( 1 )
 text = "Start"
 underline = 2
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 11 )
-autoplay = true
+[node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 492.0
+margin_right = 1024.0
+margin_bottom = 544.0
+
+[node name="Help" type="LinkButton" parent="VBoxContainer/CenterContainer3"]
+margin_left = 458.0
+margin_right = 566.0
+margin_bottom = 52.0
+custom_fonts/font = SubResource( 2 )
+text = "Help"
+underline = 2
+
+[node name="CenterContainer4" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 548.0
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="Credits" type="LinkButton" parent="VBoxContainer/CenterContainer4"]
+margin_left = 420.0
+margin_right = 604.0
+margin_bottom = 52.0
+custom_fonts/font = SubResource( 3 )
+text = "Credits"
+underline = 2
 [connection signal="button_down" from="VBoxContainer/CenterContainer/Start" to="." method="_on_Start_button_down"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer3/Help" to="." method="_on_Help_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer4/Credits" to="." method="_on_Credits_pressed"]
