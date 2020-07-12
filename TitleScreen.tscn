@@ -8,7 +8,7 @@
 [ext_resource path="res://Graphics/Clouds/Cloud 5.png" type="Texture" id=6]
 [ext_resource path="res://logo.png" type="Texture" id=7]
 [ext_resource path="res://TitleScreen.gd" type="Script" id=8]
-[ext_resource path="res://Graphics/sky.png" type="Texture" id=9]
+[ext_resource path="res://Graphics/largersky.png" type="Texture" id=9]
 [ext_resource path="res://Fonts/RedeemGold/RedeemGold.ttf" type="DynamicFontData" id=10]
 
 [sub_resource type="DynamicFont" id=1]
@@ -38,10 +38,16 @@ __meta__ = {
 }
 
 [node name="sky" type="Sprite" parent="."]
-position = Vector2( 512, 300 )
 texture = ExtResource( 9 )
+centered = false
+
+[node name="sky2" type="Sprite" parent="."]
+position = Vector2( 2048, 0 )
+texture = ExtResource( 9 )
+centered = false
 
 [node name="ParallaxBackground" type="Container" parent="."]
+visible = false
 margin_right = 1024.0
 margin_bottom = 600.0
 script = ExtResource( 1 )
