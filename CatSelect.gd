@@ -79,4 +79,12 @@ func _on_Back_pressed():
 
 
 func _on_LinkButton1_mouse_entered():
+	$Profile.text = "Tebi is prone to being easily distracted, but so is every other cat in the race so it's a level playing field"
+
+
+func _on_LinkButton2_mouse_entered():
+	$Profile.text = "Huge is quite big. He also likes frogs a lot."
+
+
+func _on_LinkButton3_mouse_entered():
 	pass # Replace with function body.
