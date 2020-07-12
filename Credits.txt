@@ -1,0 +1,26 @@
+Made in Godot
+
+Programming
+TinyBuilder
+
+Characters
+Nantanjex
+
+Backgrounds and Writing
+Two Separate Gorillas
+
+Sound Effects
+Various sound effects provided by www.freesfx.co.uk
+
+Music
+Egmont Overture Finale by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/3701-egmont-overture-finale
+License: http://creativecommons.org/licenses/by/4.0/
+
+Cheery Monday by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/3495-cheery-monday
+License: http://creativecommons.org/licenses/by/4.0/
+
+Consort for Brass by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/3540-consort-for-brass
+License: http://creativecommons.org/licenses/by/4.0/
