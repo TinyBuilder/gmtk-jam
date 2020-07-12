@@ -79,12 +79,32 @@ func _on_Back_pressed():
 
 
 func _on_LinkButton1_mouse_entered():
-	$Profile.text = "Tebi is prone to being easily distracted, but so is every other cat in the race so it's a level playing field"
+	$Profile.text = "Tebi is prone to being easily distracted, but so is every other cat in the race so she's not really special."
 
 
 func _on_LinkButton2_mouse_entered():
-	$Profile.text = "Huge is quite big. He also likes frogs a lot."
+	$Profile.text = "Despite his name, Huge is no bigger than any other cat in the race. He also likes frogs a lot."
 
 
 func _on_LinkButton3_mouse_entered():
-	pass # Replace with function body.
+	$Profile.text = "Sam was meme'd out of retirement and now greatly regrets it."
+
+
+func _on_LinkButton4_mouse_entered():
+	$Profile.text = "Cairo's unique colours and stripes give off an air of royalty, although some people think her stripes are painted on."
+
+
+func _on_LinkButton5_mouse_entered():
+	$Profile.text = "Don't trust Jeremy."
+
+
+func _on_LinkButton6_mouse_entered():
+	$Profile.text = "It is a cruel irony that she is called Meringue as she can't eat sweets on account of being a cat, and also diabetic."
+
+
+func _on_LinkButton7_mouse_entered():
+	$Profile.text = "Baron: When I grow up, I want to be a Doberman!"
+
+
+func _on_LinkButton8_mouse_entered():
+	$Profile.text = "Train gives off an air of danger, as if he was important in one of his nine lives."

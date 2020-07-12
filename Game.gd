@@ -45,6 +45,14 @@ func _ready():
 func _process(delta):
 	if not started:
 		$CenterContainer/Label.text = str(ceil($StartCountdown.time_left))
+	var front = 0
+	var lead = 0
+	for cat in cats:
+		if cat.position.x > front:
+			lead = cat.id
+			front = cat.position.x
+	Global.front = front
+	Global.lead = lead
 
 func _on_Area2D_body_entered(body):
 	if finished:

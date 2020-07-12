@@ -6,6 +6,10 @@ export (PackedScene) var Cat
 # var a = 2
 # var b = "text"
 
+var b1
+var b2
+var up = true
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,12 +28,36 @@ func _ready():
 	add_child(cat3)
 	cat3.position = $"3rd".position
 	cat3.start(Global.rng, Global.third, Global.third == Global.player_no, true)
-
+	
+	$balloon.position.x = randf() * 200 + 156
+	$balloon.position.y = randf() * 200 + 64
+	b1 = $balloon.position
+	$balloon2.position.x = randf() * 200 + 156 + 512
+	$balloon2.position.y = randf() * 200 + 64
+	b2 = $balloon2.position
+	if b1.y < b2.y:
+		up = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	if $balloon.position.y < b1.y - 32:
+		up = false
+	elif $balloon.position.y > b1.y + 32:
+		up = true
+	if up:
+		$balloon.position.y -= 0.1
+		$balloon2.position.y += 0.1
+	else:
+		$balloon.position.y += 0.1
+		$balloon2.position.y -= 0.1
 
+	$sky.position.x -= 1
+	if $sky.position.x <= -2048:
+		$sky.position.x = 2048
+	
+	$sky2.position.x -= 1
+	if $sky2.position.x <= -2048:
+		$sky2.position.x = 2048
 
 func _on_Restart_pressed():
 	get_tree().change_scene("res://CatSelect.tscn")

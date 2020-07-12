@@ -1,6 +1,6 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
-[ext_resource path="res://Graphics/sky.png" type="Texture" id=1]
+[ext_resource path="res://Graphics/largersky.png" type="Texture" id=1]
 [ext_resource path="res://Graphics/Medals/Gold.png" type="Texture" id=2]
 [ext_resource path="res://Graphics/Stand/Stand Concrete.png" type="Texture" id=3]
 [ext_resource path="res://Graphics/Medals/Silver.png" type="Texture" id=4]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Fonts/RedeemGold/RedeemGold.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://Podium.gd" type="Script" id=14]
 [ext_resource path="res://Cat.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Sprites/balloon.png" type="Texture" id=16]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Gold.png 0"
@@ -126,9 +127,15 @@ script = ExtResource( 14 )
 Cat = ExtResource( 15 )
 
 [node name="sky" type="Sprite" parent="."]
-position = Vector2( 512, 300 )
 z_index = -1
 texture = ExtResource( 1 )
+centered = false
+
+[node name="sky2" type="Sprite" parent="."]
+position = Vector2( 2048, 0 )
+z_index = -1
+texture = ExtResource( 1 )
+centered = false
 
 [node name="Gold Pillar" type="Sprite" parent="."]
 position = Vector2( 512, 480 )
@@ -236,5 +243,11 @@ position = Vector2( 512, 520 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
 shape = SubResource( 4 )
+
+[node name="balloon" type="Sprite" parent="."]
+texture = ExtResource( 16 )
+
+[node name="balloon2" type="Sprite" parent="."]
+texture = ExtResource( 16 )
 [connection signal="pressed" from="VBoxContainer/CenterContainer/Restart" to="." method="_on_Restart_pressed"]
 [connection signal="pressed" from="VBoxContainer/CenterContainer2/MainMenu" to="." method="_on_MainMenu_pressed"]

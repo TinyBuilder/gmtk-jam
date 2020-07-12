@@ -31,7 +31,7 @@ func start(random, no, player, gravity):
 	elif is_player == null:
 		$Player.hide()
 	else:
-		$Player.play("cpu")
+		$Player.hide()
 	affected_by_gravity = gravity
 	idle()
 
@@ -50,7 +50,7 @@ func prioritise_target(a, b):
 
 func add_target(target):
 	targets.append(target)
-	if target.global_position.distance_to(global_position) < 200 and rng.randf_range(0.0, 10.0) < 3.0:
+	if target.global_position.distance_to(global_position) < 400 and rng.randf_range(0.0, 10.0) < 3.0:
 		evaluate()
 
 func remove_target(target, eater):
@@ -66,7 +66,7 @@ func remove_target(target, eater):
 			targets.erase(target)
 
 func add_threat(threat):
-	if threat.global_position.distance_to(global_position) < 50 and rng.randf_range(0.0, 10.0) < 7.5:
+	if threat.global_position.distance_to(global_position) < 100 and rng.randf_range(0.0, 10.0) < 8.5:
 		var speed = rng.randf_range(1.5, 2.0) * MAX_SPEED
 		velocity.x = global_position.x - threat.global_position.x
 		velocity.y = global_position.y - threat.global_position.y
@@ -82,13 +82,13 @@ func evaluate():
 		if targets.size() > 1:
 			targets.sort_custom(self, "prioritise_target")
 		
-		if targets.size() > 0 and targets[0].global_position.distance_to(global_position) < 200 and rng.randf_range(0.0, 10.0) < 9.0:
+		if targets.size() > 0 and targets[0].global_position.distance_to(global_position) < 400 and rng.randf_range(0.0, 10.0) < 9.5:
 			is_chasing = true
 			velocity.x = targets[0].global_position.x - global_position.x
 			velocity.y = targets[0].global_position.y - global_position.y
 		else:
 			is_chasing = false
-			if global_position.x < Global.front and not is_player:
+			if global_position.x < Global.front and Global.lead != Global.player_no and not is_player:
 				velocity.x = rng.randf_range(-0.5, 1.5)
 			else:
 				velocity.x = rng.randf_range(-1.0, 1.0)

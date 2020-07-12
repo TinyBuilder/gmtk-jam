@@ -14,6 +14,7 @@ var player_no = 0
 var TitleBGM
 var RaceBGM
 var PodiumBGM
+var lead = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
