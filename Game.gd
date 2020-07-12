@@ -10,16 +10,19 @@ export (PackedScene) var Cucumber
 
 const MAX_CATS = 8
 var cats = []
-var player_no = 0
 
 var crosshair = load("res://Sprites/retical.png")
 
 var fish_ready = false
 var cucumber_ready = false
 var started = false
+var finished = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Global.TitleBGM.stop()
+	Global.PodiumBGM.stop()
+	Global.RaceBGM.play()
 	#Input.set_custom_mouse_cursor(crosshair)
 	
 	$FishHUD.play("default")
@@ -28,14 +31,15 @@ func _ready():
 	for i in range(MAX_CATS):
 		var cat = Cat.instance()
 		var is_player = false
-		if i == player_no:
+		if i == Global.player_no:
 			is_player = true
 		add_child(cat)
 		cats.append(cat)
 		var pos = $StartPosition.position
 		pos.y -= i*32
 		cat.position = pos
-		cat.start(Global.rng, is_player, false)
+		cat.z_index = 2
+		cat.start(Global.rng, i, is_player, false)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -43,19 +47,28 @@ func _process(delta):
 		$CenterContainer/Label.text = str(ceil($StartCountdown.time_left))
 
 func _on_Area2D_body_entered(body):
+	if finished:
+		return
 	if body.name.match("**Cat****"):
-		var second = cats[0]
-		var third = cats[0]
-		for cat in cats:
-			if cat.global_position.x > second.global_position.x:
-				second = cat
-			elif cat.global_position.x > third.global_position.x:
-				third = cat
-		Global.winner = cats.find(body)
-		Global.second = cats.find(second)
-		Global.third = cats.find(third)
+		finished = true
+		var winner = body.id
+		var second = 0
+		var third = 0
+		if winner == 0:
+			second = 1
+			third = 1
+		for i in range(cats.size()):
+			if i != body.id:
+				if cats[i].global_position.x > cats[second].global_position.x:
+					third = second
+					second = i
+				elif cats[i].global_position.x > cats[third].global_position.x:
+					third = i
+		Global.winner = winner
+		Global.second = second
+		Global.third = third
 		$CenterContainer.show()
-		$CenterContainer/Label.text = "Cat " + str(Global.winner + 1) + " wins!"
+		$CenterContainer/Label.text = "Cat " + str(winner + 1) + " wins!"
 		$EndTimer.start()
 
 func _on_FishTimer_timeout():

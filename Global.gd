@@ -10,9 +10,16 @@ var second = 1
 var third = 2
 var rng = RandomNumberGenerator.new()
 var front = 0
+var player_no = 0
+var TitleBGM
+var RaceBGM
+var PodiumBGM
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	TitleBGM = $TitleBGM
+	RaceBGM = $RaceBGM
+	PodiumBGM = $PodiumBGM
 	randomize()
 
 
