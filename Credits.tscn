@@ -1,13 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Graphics/sky.png" type="Texture" id=1]
 [ext_resource path="res://Fonts/RedeemGold/RedeemGold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Credits.gd" type="Script" id=3]
+[ext_resource path="res://Credits.tres" type="DynamicFont" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
 font_data = ExtResource( 2 )
 
 [node name="Credits" type="TextureRect"]
@@ -21,12 +23,77 @@ __meta__ = {
 
 [node name="LinkButton" type="LinkButton" parent="."]
 margin_left = 450.0
-margin_top = 484.0
+margin_top = 516.0
 margin_right = 574.0
-margin_bottom = 536.0
+margin_bottom = 568.0
 custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 0.8, 0.619608, 1 )
+custom_colors/font_color_pressed = Color( 0.768627, 0.360784, 0, 1 )
 text = "Back"
 underline = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_right = 1024.0
+margin_bottom = 484.0
+custom_fonts/normal_font = ExtResource( 4 )
+custom_colors/default_color = Color( 0.768627, 0.360784, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Team CurryCat
+
+Programming
+LittleBattler
+
+Character Art
+Nantenjex
+
+Backgrounds and Writing
+Two Separate Gorillas
+
+SFX
+Various SFX from www.freesfx.co.uk
+
+Music
+Egmont Overture Finale by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/3701-egmont-overture-finale
+License: http://creativecommons.org/licenses/by/4.0/
+
+Cheery Monday by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/3495-cheery-monday
+License: http://creativecommons.org/licenses/by/4.0/
+
+Consort for Brass by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/3540-consort-for-brass
+License: http://creativecommons.org/licenses/by/4.0/[/center]"
+text = "Team CurryCat
+
+Programming
+LittleBattler
+
+Character Art
+Nantenjex
+
+Backgrounds and Writing
+Two Separate Gorillas
+
+SFX
+Various SFX from www.freesfx.co.uk
+
+Music
+Egmont Overture Finale by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/3701-egmont-overture-finale
+License: http://creativecommons.org/licenses/by/4.0/
+
+Cheery Monday by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/3495-cheery-monday
+License: http://creativecommons.org/licenses/by/4.0/
+
+Consort for Brass by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/3540-consort-for-brass
+License: http://creativecommons.org/licenses/by/4.0/"
 __meta__ = {
 "_edit_use_anchors_": false
 }
